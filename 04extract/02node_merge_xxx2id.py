@@ -1,12 +1,8 @@
-import pickle
-import re
-
 import mysql.connector
 from gbertopic.bertopic.backend._sentencetransformers import SentenceTransformerBackend
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-from py2neo import Graph, Subgraph, NodeMatcher
-from py2neo import Node, Relationship, Path
+import re
 
 def print_paired_events(sim, events):
     pairs = []
@@ -36,32 +32,49 @@ def count_events(events, event_infos):
 
     return data
 
+def get_relation2id():
+    with open('data/relation2id.txt', 'w', encoding='utf-8') as file:
+        file.write(str(5) + '\n')
+        file.write('{}\t{}\n'.format('but', 0))
+        file.write('{}\t{}\n'.format('causal', 1))
+        file.write('{}\t{}\n'.format('condition', 2))
+        file.write('{}\t{}\n'.format('more', 3))
+        file.write('{}\t{}\n'.format('seq', 4))
 
-def get_effect(k):
-    effect = [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, ]
-    return effect[k]
+def get_entity2id(data_nodes):
+    with open('data/entity2id.txt', 'w', encoding='utf-8') as file:
+        file.write(str(len(data_nodes)) + '\n')
+        for entity in data_nodes:
+            # file.write(entity['label'] + '\t' + entity['id'] + '\n')
+            file.write('{}\t{}\n'.format(entity['label'], entity['id']))
 
 
-def get_relation_weight(relation):
-    dict = {'causal': 1, 'condition': 1,
-            'more': 0.5, 'seq': 0.5,
-            'but': -0.5}
-    if relation in dict:
-        return dict[relation]
-    else:
-        return dict[re.findall(r'\[(.*?)\]', relation)[0]]
+def get_train2id(data_edges):
+    with open('data/train2id.txt', 'w', encoding='utf-8') as file:
+        file.write(str(len(data_edges)) + '\n')
+        for relation in data_edges:
+            # file.write(relation['from'] + '\t' + relation['to'] + '\t' + getRid(relation['label'])+ '\n')
+            file.write('{}\t{}\t{}\n'.format(relation['from'], relation['to'], getRid(relation['label'])))
 
+
+def getRid(label):
+    type = re.findall(r'\[(.*?)\]', label)[0]
+    if type == 'but':
+        return "0"
+    elif type == 'causal':
+        return "1"
+    elif type == 'condition':
+        return "2"
+    elif type == 'more':
+        return "3"
+    elif type == 'seq':
+        return "4"
 
 class NodeMerge:
     def __init__(self):
         self.conn = mysql.connector.connect(host='localhost', user='root', passwd='root', db='zhihu', charset='utf8')
         self.cursor = self.conn.cursor()
         self.embedding_model = SentenceTransformerBackend("sentence-transformers/all-MiniLM-L6-v2")
-        self.graph = Graph('bolt://localhost:7687', auth=('neo4j', '123456'))
-
-        with open('utils/topic_model.pkl', 'rb') as f:
-            self.topic_model = pickle.loads(f.read())
-        # BerTopic_model = GBERTopic.load("my_topics_model")
 
 
     # 1、提取出同一聚类下的所有 事件节点 及其嵌入
@@ -70,13 +83,14 @@ class NodeMerge:
         self.cursor.execute(sql, (k, ))
         items = self.cursor.fetchall()
 
+
         events = []
         event_infos = []
         # pre_part用1表示，post_part用2表示
         for item in items:
             events.append(item[1])
             event_infos.append({'event_id': item[0], 'pre_or_post': 1,
-                                'label': item[3],
+                                'label': '[{}]{}'.format(item[3], item[4]),
                                 'k': k})
 
             events.append(item[2])
@@ -88,34 +102,12 @@ class NodeMerge:
         return event_embeddings, event_infos, events
 
 
-    # 1、提取出同一聚类下的所有 事件节点 及其嵌入
-    def get_topic(self,):
-        sql = "select doc_id, pre_part, post_part, type, tag from events"
-        self.cursor.execute(sql)
-        items = self.cursor.fetchall()
-
-        events = []
-        event_infos = []
-        # pre_part用1表示，post_part用2表示
-        for item in items:
-            events.append(item[1])
-            event_infos.append({'k': item[0], 'pre_or_post': 1,
-                                'label': item[3],})
-
-            events.append(item[2])
-            event_infos.append({'k': item[0], 'pre_or_post': 2,
-                                'label': '[{}]{}'.format(item[3], item[4]),})
-
-        event_embeddings = self.embedding_model.embed_documents(document=events)
-        return event_embeddings, event_infos, events
-
-
     # 2、计算相似度，并合并节点
     def node_merge(self, event_embeddings, events):
         sim = cosine_similarity(event_embeddings)
         print('****' * 6)
-        # print('{}聚类下，两两一对看相似度'.format(k))
-        # print_paired_events(sim, events)  # 可以打印一下，但是有点慢
+        print('{}聚类下，两两一对看相似度'.format(k))
+        print_paired_events(sim, events)  # 可以打印一下，
         for i in range(len(events) - 2):
             if i % 2 == 0:
                 idx = np.argmax(sim[i][i + 2:]) + i + 2
@@ -134,42 +126,61 @@ class NodeMerge:
             nodes.append(events[i])
             nodes.append(events[i+1])
             edges.append({'from': events[i], 'to': events[i+1],
-                          'from_k': event_infos[i]['k'], 'to_k': event_infos[i+1]['k'],
                           'label': event_infos[i]['label']})
             i = i+2
 
+        # node_dict = {node: {'index': index, 'k': event_infos} for index, node in enumerate(nodes)}
         node_dict = {}
-        for index, node in enumerate(nodes):
+        index = 0
+        for node in nodes:
             if node not in node_dict:
-                # node_dict[node] = {'index': index, 'k': event_infos[index]['k']}
-                node_dict[node] = {'k': event_infos[index]['k']}
+                node_dict[node] = {'index': index, 'k': event_infos[index]['k']}
+                index += 1
 
+        data_nodes = []
+        data_edges = []
         for node, info in node_dict.items():
-            neo_node = Node(str(info['k']), name=node)
-            self.graph.create(neo_node)
+            data = {}
+            data["group"] = info['k']
+            data["id"] = info['index']
+            data["label"] = node
+            data_nodes.append(data)
 
-        node_matcher = NodeMatcher(self.graph)  # 节点匹配器
         for index, edge in enumerate(edges):
-            # 1. 组装边的权重
-            # 计算效应值，即from节点的类别效应
-            effect = get_effect(edge['from_k'])
-            # 获取句间关系的权重
-            relation_weight = get_relation_weight(event_infos[index]['label'])
-            # 边的值： 0.6 * effect + 0.4 * relation
-            weight = 0.6 * effect + 0.4 * relation_weight
+            data = {}
+            data['from'] = int(node_dict[edge['from']]['index'])
+            data['label'] = edge['label']
+            data['to'] = int(node_dict[edge['to']]['index'])
+            data_edges.append(data)
 
-            # 2. 查找图中的节点 并建边
-            from_node = node_matcher.match(str(edge['from_k']), name=edge['from']).first()
-            to_node = node_matcher.match(str(edge['to_k']), name=edge['to']).first()
-            if from_node and to_node:
-                relation = Relationship(from_node, str(weight), to_node, weight=-weight)
-                self.graph.create(relation)
+        # f = open('travel_event_graph.html', 'w+', encoding='utf-8')
+        # html = base.replace('data_nodes', str(data_nodes)).replace('data_edges', str(data_edges))
+        get_entity2id(data_nodes)
+        get_train2id(data_edges)
+        get_relation2id()
 
+# 聚类内部合并的版本
 merge = NodeMerge()
-topic_nums = 8
-event_embeddings, event_infos, events = merge.get_topic()
-eventss = merge.node_merge(event_embeddings, events)
-merge.to_graph(eventss, event_infos)
+topic_nums = 1
+eventss = []
+event_infoss = []
+for k in range(4):
+    event_embeddings, event_infos, events = merge.get_topic_k(k)
+    event_infoss.extend(event_infos)
+    events = merge.node_merge(event_embeddings, events)
+    eventss.extend(events)
+merge.to_graph(eventss, event_infoss)
 
+# 全部聚类一起计算相似度的版本
+# eventss = []
+# event_infoss = []
+# event_embeddingss = []
+# for k in range(7):
+#     event_embeddings, event_infos, events = merge.get_topic_k(k)
+#     event_embeddingss.extend(event_embeddings)
+#     event_infoss.extend(event_infos)
+#     eventss.extend(events)
+# eventss = merge.node_merge(event_embeddingss, eventss)
+# merge.to_graph(eventss, event_infoss)
 
 
