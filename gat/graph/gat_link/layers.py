@@ -30,6 +30,7 @@ class GraphAttentionLayer(nn.Module):
     def forward(self, h, adj, link_weight):  # h为节点特征，adj为邻接矩阵
         # h.shape: (N, in_features), Wh.shape: (N, out_features)
         Wh = torch.mm(h, self.W)
+        # 1111
 
         # 用于得到计算注意力系数的矩阵。
         # 这里采用的是矩阵形式，一次计算便可得到网络中所有结点对之间的注意力系数
