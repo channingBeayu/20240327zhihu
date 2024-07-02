@@ -40,7 +40,7 @@ class Doc2Events:
         for p_info in self.ps_info:
             eventt = self.extract_events(p_info[0])
             for event in eventt:
-                events.append((p_info[1], *event))
+                events.append((p_info[1], *event))  # 暂时把doc_id作为topic列
         # 10个文章就421个事件对了，而且分句质量有好有坏
         self.save_events(events)
 

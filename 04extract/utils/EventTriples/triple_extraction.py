@@ -25,15 +25,15 @@ class TripleExtractor:
                          postags[word_index][0] not in ['w', 'u', 'x'] and words[word_index]])
             if s  and o:
                 return '1', [s, v, o]
-        # elif 'A0' in role_info:
-        #     s = ''.join([words[word_index] for word_index in range(role_info['A0'][1], role_info['A0'][2] + 1) if
-        #                  postags[word_index][0] not in ['w', 'u', 'x']])
-        #     if s:
-        #         return '2', [s, v]
-        # elif 'A1' in role_info:
-        #     o = ''.join([words[word_index] for word_index in range(role_info['A1'][1], role_info['A1'][2]+1) if
-        #                  postags[word_index][0] not in ['w', 'u', 'x']])
-        #     return '3', [v, o]
+        elif 'A0' in role_info:
+            s = ''.join([words[word_index] for word_index in range(role_info['A0'][1], role_info['A0'][2] + 1) if
+                         postags[word_index][0] not in ['w', 'u', 'x']])
+            if s:
+                return '2', [s, v]
+        elif 'A1' in role_info:
+            o = ''.join([words[word_index] for word_index in range(role_info['A1'][1], role_info['A1'][2]+1) if
+                         postags[word_index][0] not in ['w', 'u', 'x']])
+            return '3', [v, o]
         return '4', []
 
     '''三元组抽取主函数'''
@@ -102,8 +102,8 @@ class TripleExtractor:
     '''程序主控函数'''
     def triples_main(self, sentence):
         words, postags, child_dict_list, roles_dict, arcs = self.parser.parser_main(sentence)
-        svo = self.ruler2(words, postags, child_dict_list, arcs, roles_dict)
-        return svo
+        svos = self.ruler2(words, postags, child_dict_list, arcs, roles_dict)
+        return svos
 
 
 

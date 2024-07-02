@@ -6,10 +6,10 @@ class TrunkExractor():
         self.tripleExtractor = TripleExtractor()
 
     def event_to_trunk(self, event):
-        svo = self.tripleExtractor.triples_main(event)
+        svos = self.tripleExtractor.triples_main(event)
         # print('SVOs(主谓宾)', svo)
-        if svo:
-            return ''.join(svo[0])
+        if svos:
+            return ''.join(svos[0])
         else:
             return event
 

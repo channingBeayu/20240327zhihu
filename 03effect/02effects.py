@@ -21,7 +21,7 @@ from causalinference import CausalModel
 
 for i in range(1, data_senti.shape[1]):
     X = dataset[i].values
-    confounders = dataset.drop(columns=[0, i]).values
+    confounders = dataset.drop(columns=[0, i, 7]).values  # 7 的doc_id列
     model = CausalModel(Y, X, confounders)
     model.est_via_matching(bias_adj=True)
     print(f'---------topic{i}------------')

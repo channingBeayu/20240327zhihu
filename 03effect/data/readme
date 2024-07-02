@@ -1,0 +1,6 @@
+Sentis.txt
+[文章情感值, topic1的情感值, topic2的情感值,…]
+
+Hc.txt
+Docid, fans_count, comment_count, voteup_count
+作为混淆因素

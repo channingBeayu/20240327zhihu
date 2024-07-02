@@ -135,7 +135,7 @@ class NodeMerge:
         for node in nodes:
             if node not in node_dict:
                 node_dict[node] = {'index': index, 'k': event_infos[index]['k']}
-                index += 1
+            index += 1
 
         data_nodes = []
         data_edges = []
