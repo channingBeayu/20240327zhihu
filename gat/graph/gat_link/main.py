@@ -81,7 +81,6 @@ for i in range(nheads):
     getattr(model2, attention_module_name).load_state_dict(params_i)
 
 
-
 # loss and optimizer
 optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
 
