@@ -55,7 +55,6 @@ class GraphAttentionLayer(nn.Module):
         # 如果是多头拼接，则进行激活，反之不必
         if self.concat:
             return F.elu(h_prime)
-        
         else:
             return h_prime
 
