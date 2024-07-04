@@ -1,5 +1,4 @@
 import os.path as osp
-import re
 
 import pandas as pd
 import numpy as np
@@ -8,38 +7,12 @@ import torch
 from sklearn.metrics import roc_auc_score
 from torch_geometric.data import Data
 from torch_geometric.utils import negative_sampling
-from torch_geometric.datasets import Planetoid
-import torch_geometric.transforms as T
 from torch_geometric.utils import train_test_split_edges
 from gbertopic.bertopic.backend._sentencetransformers import SentenceTransformerBackend
 from gat.graph.gat_node.model import GAT as GAT_node
 
 from gat.graph.gat_link.utils import load_data
 from model import Net
-
-def get_link_weight(link_label):
-    type = re.findall(r'\[(.*?)\]', link_label)[0]
-    # if type == 'but':
-    #     return 3.0
-    # elif type == 'causal':
-    #     return 15.0
-    # elif type == 'condition':
-    #     return 8.0
-    # elif type == 'more':
-    #     return 4.0
-    # elif type == 'seq':
-    #     return 6.0
-    if type == 'but':
-        return 1.2
-    elif type == 'causal':
-        return 3.0
-    elif type == 'condition':
-        return 2.0
-    elif type == 'more':
-        return 1.6
-    elif type == 'seq':
-        return 1.8
-
 
 data = Data()
 
@@ -50,18 +23,9 @@ embedding_model = SentenceTransformerBackend("sentence-transformers/all-MiniLM-L
 data.x = torch.tensor(embedding_model.embed_documents(document=idx_features_labels[1]))
 # data.num_nodes = data.x.shape[0]
 
-edges_data = pd.read_csv("{}{}.cites".format('../dataset/mydata/', 'zh'), sep='\t', header=None)
-idx = idx_features_labels.iloc[:, 0].values
+edges_data = pd.read_csv("{}{}.cites".format(path, dataset), sep='\t', header=None).iloc[:, :2]
+idx = idx_features_labels.iloc[:,0].values
 idx_map = {j: i for i, j in enumerate(idx)}
-# 形成一个(N*N)的矩阵，[i,j]表示这条边的重要程度,N=features.shape[0]
-link_weight = torch.ones(data.x.shape[0], data.x.shape[0])
-for i in range(edges_data.shape[0]):
-    row = edges_data.iloc[i]
-    try:
-        link_weight[idx_map[row[0]]][idx_map[row[1]]] = get_link_weight(row[2])
-    except:
-        print()
-edges_data = edges_data.iloc[:, :2]
 edges = edges_data.iloc[:,0:2].applymap(lambda x:idx_map.get(x))
 edges = edges.iloc[:,0:2].values.flatten('F').reshape(2, -1)  # # 将edges转为[2, edge]的形式
 data.edge_index = torch.tensor(np.array(edges))
@@ -73,8 +37,6 @@ adj, features, labels, idx_train, idx_val, idx_test = load_data()
 # torch.Size([2, 10556])
 
 data = train_test_split_edges(data)
-
-
 
 def get_link_labels(pos_edge_index, neg_edge_index):
     num_links = pos_edge_index.size(1) + neg_edge_index.size(1)
@@ -91,7 +53,7 @@ def train(data, model, optimizer):
         num_neg_samples=data.train_pos_edge_index.size(1))  # 负样本和正样本的数量一样多
 
     optimizer.zero_grad()
-    z = model.encode(data.x, data.train_pos_edge_index, adj, link_weight)  # 输入节点和正样本边，输出(N*64) 应该是更新了节点特征
+    z = model.encode(data.x, data.train_pos_edge_index, adj)  # 输入节点和正样本边，输出(N*64) 应该是更新了节点特征
     link_logits = model.decode(z, data.train_pos_edge_index, neg_edge_index)  # 输入节点、正样本边、负样本边，输出每条边存在的概率
     link_labels = get_link_labels(data.train_pos_edge_index, neg_edge_index).to(data.x.device)  # 真实标签（111，000）
     loss = F.binary_cross_entropy_with_logits(link_logits, link_labels)
@@ -104,7 +66,7 @@ def train(data, model, optimizer):
 def teest(data, model):
     model.eval()
 
-    z = model.encode(data.x, data.train_pos_edge_index, adj, link_weight)
+    z = model.encode(data.x, data.train_pos_edge_index, adj)
 
     results = []
     for prefix in ['val', 'test']:
@@ -119,10 +81,28 @@ def teest(data, model):
 
 def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
     model = Net(data.x.shape[1], 64).to(device)
 
-
+    ###
+    num_epochs = 1000
+    seed = 2022
+    dropout = 0.6
+    alpha = 0.2
+    nheads = 8
+    hidden = 8
+    lr = 0.005
+    weight_decay = 5e-4
+    model2 = GAT_node(nfeat=features.size()[1], nhid=hidden,
+            nclass=labels.max().item() + 1, dropout=dropout,
+            alpha=alpha, nheads=nheads)
+    model2.load_state_dict(torch.load('../saved_model/model.pth'))
+    model2.eval()
+    nheads = 8
+    for i in range(nheads):
+        attention_module_name = f'attention_{i}'
+        params_i = getattr(model2, attention_module_name).state_dict()
+        getattr(model, attention_module_name).load_state_dict(params_i)
+    ##
     optimizer = torch.optim.Adam(params=model.parameters(), lr=0.01)
 
     best_val_auc = test_auc = 0
@@ -135,7 +115,7 @@ def main():
         print(f'Epoch: {epoch:03d}, Loss: {loss:.4f}, Val: {val_auc:.4f}, '
               f'Test: {test_auc:.4f}')
 
-    z = model.encode(data.x, data.train_pos_edge_index, adj, link_weight)
+    z = model.encode(data.x, data.train_pos_edge_index, adj)
     final_edge_index = model.decode_all(z)
     print()
 

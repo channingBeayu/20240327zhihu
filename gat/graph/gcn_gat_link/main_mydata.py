@@ -82,17 +82,6 @@ def teest(data, model):
 
 def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-    # dataset = 'Cora'
-    # path = osp.join(osp.dirname(osp.realpath(__file__)), '..', 'data', dataset)
-    # dataset = Planetoid(path, dataset, transform=T.NormalizeFeatures())
-    # data = dataset[0]
-    # ground_truth_edge_index = data.edge_index.to(device)
-    # data.train_mask = data.val_mask = data.test_mask = data.y = None
-    # data = train_test_split_edges(data)
-    # data = data.to(device)
-
-    # model = Net(dataset.num_features, 64).to(device)
     model = Net(data.x.shape[1], 64).to(device)
     optimizer = torch.optim.Adam(params=model.parameters(), lr=0.01)
 
@@ -106,8 +95,13 @@ def main():
         print(f'Epoch: {epoch:03d}, Loss: {loss:.4f}, Val: {val_auc:.4f}, '
               f'Test: {test_auc:.4f}')
 
-    z = model.encode(data.x, data.train_pos_edge_index)
+    z = model.encode(data.x, data.train_pos_edge_index, adj)
     final_edge_index = model.decode_all(z)
+    print()
+
+    # 保存模型
+    model_save_path = './model.pth'
+    torch.save(model.state_dict(), model_save_path)
     print()
 
 

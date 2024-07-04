@@ -1,0 +1,121 @@
+D:\softwares\anaconda3\envs\RGAT20230627\python.exe F:/Code/240313/gat/graph/gcn_gat_link_weight_node/main_mydata.py
+Loading zh dataset...
+D:\softwares\anaconda3\envs\RGAT20230627\lib\site-packages\torch_geometric\deprecation.py:26: UserWarning: 'train_test_split_edges' is deprecated, use 'transforms.RandomLinkSplit' instead
+  warnings.warn(out)
+Epoch: 001, Loss: 0.8563, Val: 0.5936, Test: 0.6367
+Epoch: 002, Loss: 0.6443, Val: 0.5100, Test: 0.6367
+Epoch: 003, Loss: 0.6560, Val: 0.5000, Test: 0.6367
+Epoch: 004, Loss: 0.6655, Val: 0.5000, Test: 0.6367
+Epoch: 005, Loss: 0.6595, Val: 0.5000, Test: 0.6367
+Epoch: 006, Loss: 0.6658, Val: 0.5000, Test: 0.6367
+Epoch: 007, Loss: 0.6639, Val: 0.5000, Test: 0.6367
+Epoch: 008, Loss: 0.6562, Val: 0.4767, Test: 0.6367
+Epoch: 009, Loss: 0.6562, Val: 0.5230, Test: 0.6367
+Epoch: 010, Loss: 0.6389, Val: 0.7161, Test: 0.6933
+Epoch: 011, Loss: 0.6457, Val: 0.6831, Test: 0.6933
+Epoch: 012, Loss: 0.6401, Val: 0.5754, Test: 0.6933
+Epoch: 013, Loss: 0.6008, Val: 0.4946, Test: 0.6933
+Epoch: 014, Loss: 0.6212, Val: 0.5562, Test: 0.6933
+Epoch: 015, Loss: 0.6050, Val: 0.7253, Test: 0.6969
+Epoch: 016, Loss: 0.5918, Val: 0.5614, Test: 0.6969
+Epoch: 017, Loss: 0.5818, Val: 0.5700, Test: 0.6969
+Epoch: 018, Loss: 0.5747, Val: 0.6944, Test: 0.6969
+Epoch: 019, Loss: 0.5684, Val: 0.6917, Test: 0.6969
+Epoch: 020, Loss: 0.5791, Val: 0.6777, Test: 0.6969
+Epoch: 021, Loss: 0.5360, Val: 0.6165, Test: 0.6969
+Epoch: 022, Loss: 0.5934, Val: 0.6214, Test: 0.6969
+Epoch: 023, Loss: 0.5997, Val: 0.7242, Test: 0.6969
+Epoch: 024, Loss: 0.5572, Val: 0.7820, Test: 0.7409
+Epoch: 025, Loss: 0.5499, Val: 0.7139, Test: 0.7409
+Epoch: 026, Loss: 0.5509, Val: 0.7004, Test: 0.7409
+Epoch: 027, Loss: 0.5755, Val: 0.6939, Test: 0.7409
+Epoch: 028, Loss: 0.5548, Val: 0.7285, Test: 0.7409
+Epoch: 029, Loss: 0.5564, Val: 0.7361, Test: 0.7409
+Epoch: 030, Loss: 0.5753, Val: 0.6696, Test: 0.7409
+Epoch: 031, Loss: 0.5567, Val: 0.6371, Test: 0.7409
+Epoch: 032, Loss: 0.5531, Val: 0.6474, Test: 0.7409
+Epoch: 033, Loss: 0.5573, Val: 0.6869, Test: 0.7409
+Epoch: 034, Loss: 0.5484, Val: 0.6506, Test: 0.7409
+Epoch: 035, Loss: 0.5658, Val: 0.7258, Test: 0.7409
+Epoch: 036, Loss: 0.5565, Val: 0.7858, Test: 0.7618
+Epoch: 037, Loss: 0.5284, Val: 0.7117, Test: 0.7618
+Epoch: 038, Loss: 0.5494, Val: 0.6614, Test: 0.7618
+Epoch: 039, Loss: 0.5494, Val: 0.7112, Test: 0.7618
+Epoch: 040, Loss: 0.5487, Val: 0.6988, Test: 0.7618
+Epoch: 041, Loss: 0.5562, Val: 0.7296, Test: 0.7618
+Epoch: 042, Loss: 0.5475, Val: 0.8080, Test: 0.7731
+Epoch: 043, Loss: 0.5397, Val: 0.7599, Test: 0.7731
+Epoch: 044, Loss: 0.5649, Val: 0.7139, Test: 0.7731
+Epoch: 045, Loss: 0.5433, Val: 0.7750, Test: 0.7731
+Epoch: 046, Loss: 0.5365, Val: 0.7334, Test: 0.7731
+Epoch: 047, Loss: 0.5299, Val: 0.6923, Test: 0.7731
+Epoch: 048, Loss: 0.5242, Val: 0.6993, Test: 0.7731
+Epoch: 049, Loss: 0.5433, Val: 0.7869, Test: 0.7731
+Epoch: 050, Loss: 0.5283, Val: 0.8042, Test: 0.7731
+Epoch: 051, Loss: 0.5330, Val: 0.8156, Test: 0.7804
+Epoch: 052, Loss: 0.5255, Val: 0.8394, Test: 0.7845
+Epoch: 053, Loss: 0.5178, Val: 0.7491, Test: 0.7845
+Epoch: 054, Loss: 0.5292, Val: 0.6917, Test: 0.7845
+Epoch: 055, Loss: 0.5268, Val: 0.6533, Test: 0.7845
+Epoch: 056, Loss: 0.5443, Val: 0.6804, Test: 0.7845
+Epoch: 057, Loss: 0.5341, Val: 0.7047, Test: 0.7845
+Epoch: 058, Loss: 0.5185, Val: 0.7810, Test: 0.7845
+Epoch: 059, Loss: 0.5244, Val: 0.8004, Test: 0.7845
+Epoch: 060, Loss: 0.5285, Val: 0.7783, Test: 0.7845
+Epoch: 061, Loss: 0.5178, Val: 0.7793, Test: 0.7845
+Epoch: 062, Loss: 0.5420, Val: 0.7712, Test: 0.7845
+Epoch: 063, Loss: 0.5292, Val: 0.6998, Test: 0.7845
+Epoch: 064, Loss: 0.5406, Val: 0.6809, Test: 0.7845
+Epoch: 065, Loss: 0.5418, Val: 0.7134, Test: 0.7845
+Epoch: 066, Loss: 0.5251, Val: 0.7539, Test: 0.7845
+Epoch: 067, Loss: 0.5242, Val: 0.7198, Test: 0.7845
+Epoch: 068, Loss: 0.5466, Val: 0.7804, Test: 0.7845
+Epoch: 069, Loss: 0.5362, Val: 0.8004, Test: 0.7845
+Epoch: 070, Loss: 0.5237, Val: 0.7063, Test: 0.7845
+Epoch: 071, Loss: 0.5274, Val: 0.6587, Test: 0.7845
+Epoch: 072, Loss: 0.5307, Val: 0.6863, Test: 0.7845
+Epoch: 073, Loss: 0.5292, Val: 0.7620, Test: 0.7845
+Epoch: 074, Loss: 0.5311, Val: 0.7880, Test: 0.7845
+Epoch: 075, Loss: 0.5300, Val: 0.7777, Test: 0.7845
+Epoch: 076, Loss: 0.5408, Val: 0.7837, Test: 0.7845
+Epoch: 077, Loss: 0.5278, Val: 0.7712, Test: 0.7845
+Epoch: 078, Loss: 0.5316, Val: 0.8096, Test: 0.7845
+Epoch: 079, Loss: 0.5312, Val: 0.8161, Test: 0.7845
+Epoch: 080, Loss: 0.5416, Val: 0.7826, Test: 0.7845
+Epoch: 081, Loss: 0.5277, Val: 0.7518, Test: 0.7845
+Epoch: 082, Loss: 0.5170, Val: 0.7453, Test: 0.7845
+Epoch: 083, Loss: 0.5308, Val: 0.7566, Test: 0.7845
+Epoch: 084, Loss: 0.5321, Val: 0.7907, Test: 0.7845
+Epoch: 085, Loss: 0.5254, Val: 0.8410, Test: 0.8016
+Epoch: 086, Loss: 0.5202, Val: 0.8350, Test: 0.8016
+Epoch: 087, Loss: 0.5260, Val: 0.8210, Test: 0.8016
+Epoch: 088, Loss: 0.5207, Val: 0.8140, Test: 0.8016
+Epoch: 089, Loss: 0.5203, Val: 0.7799, Test: 0.8016
+Epoch: 090, Loss: 0.5173, Val: 0.7739, Test: 0.8016
+Epoch: 091, Loss: 0.5381, Val: 0.7956, Test: 0.8016
+Epoch: 092, Loss: 0.5185, Val: 0.7847, Test: 0.8016
+Epoch: 093, Loss: 0.5205, Val: 0.8102, Test: 0.8016
+Epoch: 094, Loss: 0.5205, Val: 0.8399, Test: 0.8016
+Epoch: 095, Loss: 0.5139, Val: 0.8296, Test: 0.8016
+Epoch: 096, Loss: 0.5312, Val: 0.7799, Test: 0.8016
+Epoch: 097, Loss: 0.5214, Val: 0.7198, Test: 0.8016
+Epoch: 098, Loss: 0.5306, Val: 0.7458, Test: 0.8016
+Epoch: 099, Loss: 0.5405, Val: 0.8118, Test: 0.8016
+Epoch: 100, Loss: 0.5187, Val: 0.8378, Test: 0.8016
+
+
+Process finished with exit code 0
+
+
+def get_link_weight(link_label):
+    type = re.findall(r'\[(.*?)\]', link_label)[0]
+    if type == 'but':
+        return 1.0
+    elif type == 'causal':
+        return 10.0
+    elif type == 'condition':
+        return 8.0
+    elif type == 'more':
+        return 3.0
+    elif type == 'seq':
+        return 5.0

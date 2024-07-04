@@ -8,8 +8,6 @@ import torch
 from sklearn.metrics import roc_auc_score
 from torch_geometric.data import Data
 from torch_geometric.utils import negative_sampling
-from torch_geometric.datasets import Planetoid
-import torch_geometric.transforms as T
 from torch_geometric.utils import train_test_split_edges
 from gbertopic.bertopic.backend._sentencetransformers import SentenceTransformerBackend
 from gat.graph.gat_node.model import GAT as GAT_node
@@ -19,26 +17,16 @@ from model import Net
 
 def get_link_weight(link_label):
     type = re.findall(r'\[(.*?)\]', link_label)[0]
-    # if type == 'but':
-    #     return 3.0
-    # elif type == 'causal':
-    #     return 15.0
-    # elif type == 'condition':
-    #     return 8.0
-    # elif type == 'more':
-    #     return 4.0
-    # elif type == 'seq':
-    #     return 6.0
     if type == 'but':
-        return 1.2
+        return 0.3
     elif type == 'causal':
-        return 3.0
-    elif type == 'condition':
         return 2.0
+    elif type == 'condition':
+        return 1.5
     elif type == 'more':
-        return 1.6
+        return 1.0
     elif type == 'seq':
-        return 1.8
+        return 2.0
 
 
 data = Data()
@@ -119,9 +107,27 @@ def teest(data, model):
 
 def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
     model = Net(data.x.shape[1], 64).to(device)
 
+    ###
+    seed = 2022
+    dropout = 0.6
+    alpha = 0.2
+    nheads = 8
+    hidden = 8
+    lr = 0.005
+    weight_decay = 5e-4
+    model2 = GAT_node(nfeat=features.size()[1], nhid=hidden,
+            nclass=labels.max().item() + 1, dropout=dropout,
+            alpha=alpha, nheads=nheads)
+    model2.load_state_dict(torch.load('../saved_model/model.pth'))
+    model2.eval()
+    nheads = 8
+    for i in range(nheads):
+        attention_module_name = f'attention_{i}'
+        params_i = getattr(model2, attention_module_name).state_dict()
+        getattr(model, attention_module_name).load_state_dict(params_i)
+    ##
 
     optimizer = torch.optim.Adam(params=model.parameters(), lr=0.01)
 
@@ -137,6 +143,11 @@ def main():
 
     z = model.encode(data.x, data.train_pos_edge_index, adj, link_weight)
     final_edge_index = model.decode_all(z)
+    print()
+
+    # 保存模型
+    model_save_path = './model.pth'
+    torch.save(model.state_dict(), model_save_path)
     print()
 
 
