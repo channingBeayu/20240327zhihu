@@ -1,0 +1,119 @@
+D:\softwares\anaconda3\envs\RGAT20230627\python.exe "D:\softwares\Pycharm\PyCharm Community Edition 2022.1.3\plugins\python-ce\helpers\pydev\pydevd.py" --multiprocess --qt-support=auto --client 127.0.0.1 --port 7566 --file F:/Code/240313/gat/graph/gcn_gat_link_weight_node/main_mydata.py
+Connected to pydev debugger (build 221.5921.27)
+Loading zh dataset...
+D:\softwares\anaconda3\envs\RGAT20230627\lib\site-packages\torch_geometric\deprecation.py:26: UserWarning: 'train_test_split_edges' is deprecated, use 'transforms.RandomLinkSplit' instead
+  warnings.warn(out)
+Epoch: 001, Loss: 1.8912, Val: 0.6376, Test: 0.4986
+Epoch: 002, Loss: 0.7141, Val: 0.4884, Test: 0.4986
+Epoch: 003, Loss: 0.6542, Val: 0.5000, Test: 0.4986
+Epoch: 004, Loss: 0.6815, Val: 0.5000, Test: 0.4986
+Epoch: 005, Loss: 0.6722, Val: 0.5000, Test: 0.4986
+Epoch: 006, Loss: 0.6791, Val: 0.5000, Test: 0.4986
+Epoch: 007, Loss: 0.6835, Val: 0.5000, Test: 0.4986
+Epoch: 008, Loss: 0.6795, Val: 0.5000, Test: 0.4986
+Epoch: 009, Loss: 0.6824, Val: 0.5000, Test: 0.4986
+Epoch: 010, Loss: 0.6823, Val: 0.5000, Test: 0.4986
+Epoch: 011, Loss: 0.6800, Val: 0.5000, Test: 0.4986
+Epoch: 012, Loss: 0.6754, Val: 0.5000, Test: 0.4986
+Epoch: 013, Loss: 0.6686, Val: 0.5000, Test: 0.4986
+Epoch: 014, Loss: 0.6757, Val: 0.5000, Test: 0.4986
+Epoch: 015, Loss: 0.6752, Val: 0.5000, Test: 0.4986
+Epoch: 016, Loss: 0.6688, Val: 0.5000, Test: 0.4986
+Epoch: 017, Loss: 0.6663, Val: 0.5000, Test: 0.4986
+Epoch: 018, Loss: 0.6569, Val: 0.5000, Test: 0.4986
+Epoch: 019, Loss: 0.6476, Val: 0.5000, Test: 0.4986
+Epoch: 020, Loss: 0.6473, Val: 0.5000, Test: 0.4986
+Epoch: 021, Loss: 0.6441, Val: 0.5000, Test: 0.4986
+Epoch: 022, Loss: 0.6402, Val: 0.5000, Test: 0.4986
+Epoch: 023, Loss: 0.6271, Val: 0.5270, Test: 0.4986
+Epoch: 024, Loss: 0.6233, Val: 0.5998, Test: 0.4986
+Epoch: 025, Loss: 0.6280, Val: 0.5195, Test: 0.4986
+Epoch: 026, Loss: 0.6055, Val: 0.6241, Test: 0.4986
+Epoch: 027, Loss: 0.6061, Val: 0.5744, Test: 0.4986
+Epoch: 028, Loss: 0.6043, Val: 0.6198, Test: 0.4986
+Epoch: 029, Loss: 0.6145, Val: 0.6571, Test: 0.5051
+Epoch: 030, Loss: 0.5834, Val: 0.6406, Test: 0.5051
+Epoch: 031, Loss: 0.6054, Val: 0.6160, Test: 0.5051
+Epoch: 032, Loss: 0.5838, Val: 0.6328, Test: 0.5051
+Epoch: 033, Loss: 0.5927, Val: 0.6163, Test: 0.5051
+Epoch: 034, Loss: 0.5849, Val: 0.6696, Test: 0.5485
+Epoch: 035, Loss: 0.5839, Val: 0.6679, Test: 0.5485
+Epoch: 036, Loss: 0.5755, Val: 0.6814, Test: 0.6540
+Epoch: 037, Loss: 0.5757, Val: 0.6501, Test: 0.6540
+Epoch: 038, Loss: 0.5814, Val: 0.6182, Test: 0.6540
+Epoch: 039, Loss: 0.5645, Val: 0.6160, Test: 0.6540
+Epoch: 040, Loss: 0.5743, Val: 0.6214, Test: 0.6540
+Epoch: 041, Loss: 0.5806, Val: 0.6452, Test: 0.6540
+Epoch: 042, Loss: 0.5820, Val: 0.6425, Test: 0.6540
+Epoch: 043, Loss: 0.5708, Val: 0.6398, Test: 0.6540
+Epoch: 044, Loss: 0.5885, Val: 0.6214, Test: 0.6540
+Epoch: 045, Loss: 0.5759, Val: 0.6138, Test: 0.6540
+Epoch: 046, Loss: 0.5773, Val: 0.6074, Test: 0.6540
+Epoch: 047, Loss: 0.5633, Val: 0.6084, Test: 0.6540
+Epoch: 048, Loss: 0.5519, Val: 0.6349, Test: 0.6540
+Epoch: 049, Loss: 0.5707, Val: 0.7334, Test: 0.6774
+Epoch: 050, Loss: 0.5892, Val: 0.7512, Test: 0.6602
+Epoch: 051, Loss: 0.5716, Val: 0.6842, Test: 0.6602
+Epoch: 052, Loss: 0.5719, Val: 0.6122, Test: 0.6602
+Epoch: 053, Loss: 0.5598, Val: 0.6047, Test: 0.6602
+Epoch: 054, Loss: 0.5441, Val: 0.6409, Test: 0.6602
+Epoch: 055, Loss: 0.5763, Val: 0.6674, Test: 0.6602
+Epoch: 056, Loss: 0.5626, Val: 0.7036, Test: 0.6602
+Epoch: 057, Loss: 0.5558, Val: 0.7902, Test: 0.6698
+Epoch: 058, Loss: 0.5562, Val: 0.7772, Test: 0.6698
+Epoch: 059, Loss: 0.5717, Val: 0.7799, Test: 0.6698
+Epoch: 060, Loss: 0.5598, Val: 0.7399, Test: 0.6698
+Epoch: 061, Loss: 0.5574, Val: 0.7025, Test: 0.6698
+Epoch: 062, Loss: 0.5510, Val: 0.6955, Test: 0.6698
+Epoch: 063, Loss: 0.5631, Val: 0.7015, Test: 0.6698
+Epoch: 064, Loss: 0.5484, Val: 0.7161, Test: 0.6698
+Epoch: 065, Loss: 0.5718, Val: 0.7588, Test: 0.6698
+Epoch: 066, Loss: 0.5591, Val: 0.8318, Test: 0.7568
+Epoch: 067, Loss: 0.5554, Val: 0.7204, Test: 0.7568
+Epoch: 068, Loss: 0.5698, Val: 0.6885, Test: 0.7568
+Epoch: 069, Loss: 0.5532, Val: 0.7431, Test: 0.7568
+Epoch: 070, Loss: 0.5643, Val: 0.8091, Test: 0.7568
+Epoch: 071, Loss: 0.5576, Val: 0.7680, Test: 0.7568
+Epoch: 072, Loss: 0.5695, Val: 0.7404, Test: 0.7568
+Epoch: 073, Loss: 0.5649, Val: 0.7361, Test: 0.7568
+Epoch: 074, Loss: 0.5542, Val: 0.6739, Test: 0.7568
+Epoch: 075, Loss: 0.5608, Val: 0.6814, Test: 0.7568
+Epoch: 076, Loss: 0.5436, Val: 0.7317, Test: 0.7568
+Epoch: 077, Loss: 0.5576, Val: 0.7842, Test: 0.7568
+Epoch: 078, Loss: 0.5514, Val: 0.7815, Test: 0.7568
+Epoch: 079, Loss: 0.5421, Val: 0.7696, Test: 0.7568
+Epoch: 080, Loss: 0.5526, Val: 0.8048, Test: 0.7568
+Epoch: 081, Loss: 0.5489, Val: 0.8080, Test: 0.7568
+Epoch: 082, Loss: 0.5498, Val: 0.7355, Test: 0.7568
+Epoch: 083, Loss: 0.5399, Val: 0.7134, Test: 0.7568
+Epoch: 084, Loss: 0.5531, Val: 0.7388, Test: 0.7568
+Epoch: 085, Loss: 0.5510, Val: 0.7804, Test: 0.7568
+Epoch: 086, Loss: 0.5697, Val: 0.8161, Test: 0.7568
+Epoch: 087, Loss: 0.5466, Val: 0.8194, Test: 0.7568
+Epoch: 088, Loss: 0.5316, Val: 0.7907, Test: 0.7568
+Epoch: 089, Loss: 0.5566, Val: 0.7950, Test: 0.7568
+Epoch: 090, Loss: 0.5325, Val: 0.8010, Test: 0.7568
+Epoch: 091, Loss: 0.5499, Val: 0.7036, Test: 0.7568
+Epoch: 092, Loss: 0.5452, Val: 0.7123, Test: 0.7568
+Epoch: 093, Loss: 0.5415, Val: 0.7582, Test: 0.7568
+Epoch: 094, Loss: 0.5455, Val: 0.7599, Test: 0.7568
+Epoch: 095, Loss: 0.5521, Val: 0.7745, Test: 0.7568
+Epoch: 096, Loss: 0.5556, Val: 0.8069, Test: 0.7568
+Epoch: 097, Loss: 0.5536, Val: 0.7691, Test: 0.7568
+Epoch: 098, Loss: 0.5523, Val: 0.7604, Test: 0.7568
+Epoch: 099, Loss: 0.5734, Val: 0.7956, Test: 0.7568
+Epoch: 100, Loss: 0.5522, Val: 0.8323, Test: 0.7400
+Backend QtAgg is interactive backend. Turning interactive mode on.
+
+def get_link_weight(link_label):
+    type = re.findall(r'\[(.*?)\]', link_label)[0]
+    if type == 'but':
+        return 0.3
+    elif type == 'causal':
+        return 2.0
+    elif type == 'condition':
+        return 1.5
+    elif type == 'more':
+        return 1.0
+    elif type == 'seq':
+        return 2.0

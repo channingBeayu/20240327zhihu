@@ -181,7 +181,7 @@ class ClusterNum:
 
         print(topic_model.get_topics())
         # 保存模型和预测值
-        topic_model.save("save/topic_gmodel")
+        topic_model.save("save/topic_model")
         # with open('save/topic_model.pkl', 'wb') as f:
         #     pickle.dump(topic_model, f)
         # with open('save/predictions.pkl', 'wb') as f:

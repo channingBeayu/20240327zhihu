@@ -1,3 +1,5 @@
+import pickle
+
 import mysql.connector
 from gbertopic.bertopic.backend._sentencetransformers import SentenceTransformerBackend
 from sklearn.metrics.pairwise import cosine_similarity
@@ -37,12 +39,18 @@ def get_content(data_nodes):
     with open('zh.content', 'w', encoding='utf-8') as file:
         for node in data_nodes:
             file.write('{}\t{}\t{}\n'.format(node['id'], node['label'], node['group']))
+    f = open('data_nodes.pkl', "wb")
+    pickle.dump(data_nodes, f)
+    f.close()
 
 
 def get_cites(data_edges):
     with open('zh.cites', 'w', encoding='utf-8') as file:
         for relation in data_edges:
             file.write('{}\t{}\t{}\n'.format(relation['from'], relation['to'], relation['label']))
+    f = open('data_edges.pkl', "wb")
+    pickle.dump(data_edges, f)
+    f.close()
 
 
 class NodeMerge:

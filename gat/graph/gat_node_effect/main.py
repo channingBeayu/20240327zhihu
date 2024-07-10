@@ -43,7 +43,8 @@ node_weight = torch.ones(labels.shape[0], labels.shape[0]) ## N*N 只有对角�
 for i in range(labels.shape[0]):
     label = int(labels[i])
     try:
-        node_weight[i][i] = get_node_weight(label)
+        # node_weight[i][i] = get_node_weight(label)
+        node_weight[:, i] = get_node_weight(label)
     except:
         print()
 
@@ -106,3 +107,8 @@ teest()
 model_save_path = '../saved_model/model.pth'
 torch.save(model.state_dict(), model_save_path)
 print()
+
+import pickle
+f = open('../saved_model/node_features.pkl', "wb")
+pickle.dump(features, f)
+f.close()

@@ -34,8 +34,16 @@ data = Data()
 path = '../dataset/mydata/'
 dataset = 'zh'
 idx_features_labels = pd.read_csv("{}{}.content".format(path, dataset), sep='\t', header=None)
-embedding_model = SentenceTransformerBackend("sentence-transformers/all-MiniLM-L6-v2")
-data.x = torch.tensor(embedding_model.embed_documents(document=idx_features_labels[1]))
+# embedding_model = SentenceTransformerBackend("sentence-transformers/all-MiniLM-L6-v2")
+# data.x = torch.tensor(embedding_model.embed_documents(document=idx_features_labels[1]))
+
+###
+import pickle
+with open('../saved_model/node_features.pkl', 'rb') as f:
+    a = pickle.loads(f.read())
+data.x = a
+###
+
 # data.num_nodes = data.x.shape[0]
 
 edges_data = pd.read_csv("{}{}.cites".format('../dataset/mydata/', 'zh'), sep='\t', header=None)
@@ -146,9 +154,9 @@ def main():
     print()
 
     # 保存模型
-    model_save_path = './model.pth'
-    torch.save(model.state_dict(), model_save_path)
-    print()
+    # model_save_path = './model.pth'
+    # torch.save(model.state_dict(), model_save_path)
+    # print()
 
 
 if __name__ == "__main__":

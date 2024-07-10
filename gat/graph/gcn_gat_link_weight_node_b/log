@@ -1,0 +1,115 @@
+D:\softwares\anaconda3\envs\RGAT20230627\python.exe "D:\softwares\Pycharm\PyCharm Community Edition 2022.1.3\plugins\python-ce\helpers\pydev\pydevd.py" --multiprocess --qt-support=auto --client 127.0.0.1 --port 2867 --file F:/Code/240313/gat/graph/gcn_gat_link_weight_node_b/main_mydata.py
+Connected to pydev debugger (build 221.5921.27)
+Loading zh dataset...
+D:\softwares\anaconda3\envs\RGAT20230627\lib\site-packages\torch_geometric\deprecation.py:26: UserWarning: 'train_test_split_edges' is deprecated, use 'transforms.RandomLinkSplit' instead
+  warnings.warn(out)
+Epoch: 001, Loss: 0.6534, Val: 0.5608, Test: 0.4985
+Epoch: 002, Loss: 0.6945, Val: 0.5111, Test: 0.4985
+Epoch: 003, Loss: 0.6509, Val: 0.5800, Test: 0.5917
+Epoch: 004, Loss: 0.6651, Val: 0.4757, Test: 0.5917
+Epoch: 005, Loss: 0.6553, Val: 0.5062, Test: 0.5917
+Epoch: 006, Loss: 0.6482, Val: 0.5003, Test: 0.5917
+Epoch: 007, Loss: 0.6414, Val: 0.7374, Test: 0.6706
+Epoch: 008, Loss: 0.6203, Val: 0.7788, Test: 0.6314
+Epoch: 009, Loss: 0.6513, Val: 0.6766, Test: 0.6314
+Epoch: 010, Loss: 0.6083, Val: 0.6739, Test: 0.6314
+Epoch: 011, Loss: 0.6024, Val: 0.5425, Test: 0.6314
+Epoch: 012, Loss: 0.5964, Val: 0.5030, Test: 0.6314
+Epoch: 013, Loss: 0.5741, Val: 0.5219, Test: 0.6314
+Epoch: 014, Loss: 0.5800, Val: 0.5327, Test: 0.6314
+Epoch: 015, Loss: 0.5772, Val: 0.5176, Test: 0.6314
+Epoch: 016, Loss: 0.5525, Val: 0.5700, Test: 0.6314
+Epoch: 017, Loss: 0.5590, Val: 0.6560, Test: 0.6314
+Epoch: 018, Loss: 0.5500, Val: 0.5809, Test: 0.6314
+Epoch: 019, Loss: 0.5435, Val: 0.5987, Test: 0.6314
+Epoch: 020, Loss: 0.5876, Val: 0.5863, Test: 0.6314
+Epoch: 021, Loss: 0.5365, Val: 0.6533, Test: 0.6314
+Epoch: 022, Loss: 0.5529, Val: 0.6944, Test: 0.6314
+Epoch: 023, Loss: 0.5492, Val: 0.6036, Test: 0.6314
+Epoch: 024, Loss: 0.5548, Val: 0.5663, Test: 0.6314
+Epoch: 025, Loss: 0.5533, Val: 0.5895, Test: 0.6314
+Epoch: 026, Loss: 0.5544, Val: 0.7047, Test: 0.6314
+Epoch: 027, Loss: 0.5601, Val: 0.7388, Test: 0.6314
+Epoch: 028, Loss: 0.5515, Val: 0.6750, Test: 0.6314
+Epoch: 029, Loss: 0.5361, Val: 0.6009, Test: 0.6314
+Epoch: 030, Loss: 0.5460, Val: 0.5895, Test: 0.6314
+Epoch: 031, Loss: 0.5305, Val: 0.6063, Test: 0.6314
+Epoch: 032, Loss: 0.5357, Val: 0.6284, Test: 0.6314
+Epoch: 033, Loss: 0.5235, Val: 0.6685, Test: 0.6314
+Epoch: 034, Loss: 0.5363, Val: 0.6982, Test: 0.6314
+Epoch: 035, Loss: 0.5298, Val: 0.7177, Test: 0.6314
+Epoch: 036, Loss: 0.5406, Val: 0.7134, Test: 0.6314
+Epoch: 037, Loss: 0.5229, Val: 0.6814, Test: 0.6314
+Epoch: 038, Loss: 0.5403, Val: 0.6739, Test: 0.6314
+Epoch: 039, Loss: 0.5492, Val: 0.6679, Test: 0.6314
+Epoch: 040, Loss: 0.5335, Val: 0.6614, Test: 0.6314
+Epoch: 041, Loss: 0.5240, Val: 0.7036, Test: 0.6314
+Epoch: 042, Loss: 0.5273, Val: 0.7144, Test: 0.6314
+Epoch: 043, Loss: 0.5396, Val: 0.7323, Test: 0.6314
+Epoch: 044, Loss: 0.5320, Val: 0.7534, Test: 0.6314
+Epoch: 045, Loss: 0.5230, Val: 0.7409, Test: 0.6314
+Epoch: 046, Loss: 0.5155, Val: 0.7307, Test: 0.6314
+Epoch: 047, Loss: 0.5141, Val: 0.7280, Test: 0.6314
+Epoch: 048, Loss: 0.5252, Val: 0.7458, Test: 0.6314
+Epoch: 049, Loss: 0.5195, Val: 0.7626, Test: 0.6314
+Epoch: 050, Loss: 0.5252, Val: 0.7864, Test: 0.7627
+Epoch: 051, Loss: 0.5141, Val: 0.7761, Test: 0.7627
+Epoch: 052, Loss: 0.5218, Val: 0.7653, Test: 0.7627
+Epoch: 053, Loss: 0.5123, Val: 0.7674, Test: 0.7627
+Epoch: 054, Loss: 0.5264, Val: 0.7577, Test: 0.7627
+Epoch: 055, Loss: 0.5219, Val: 0.7453, Test: 0.7627
+Epoch: 056, Loss: 0.5093, Val: 0.7588, Test: 0.7627
+Epoch: 057, Loss: 0.5207, Val: 0.7923, Test: 0.7551
+Epoch: 058, Loss: 0.5016, Val: 0.8015, Test: 0.7436
+Epoch: 059, Loss: 0.5221, Val: 0.7950, Test: 0.7436
+Epoch: 060, Loss: 0.5328, Val: 0.7729, Test: 0.7436
+Epoch: 061, Loss: 0.5142, Val: 0.7631, Test: 0.7436
+Epoch: 062, Loss: 0.5384, Val: 0.7934, Test: 0.7436
+Epoch: 063, Loss: 0.5237, Val: 0.7918, Test: 0.7436
+Epoch: 064, Loss: 0.5360, Val: 0.7847, Test: 0.7436
+Epoch: 065, Loss: 0.5124, Val: 0.8042, Test: 0.7435
+Epoch: 066, Loss: 0.5220, Val: 0.8037, Test: 0.7435
+Epoch: 067, Loss: 0.5074, Val: 0.7734, Test: 0.7435
+Epoch: 068, Loss: 0.5165, Val: 0.7345, Test: 0.7435
+Epoch: 069, Loss: 0.5194, Val: 0.7458, Test: 0.7435
+Epoch: 070, Loss: 0.5091, Val: 0.7701, Test: 0.7435
+Epoch: 071, Loss: 0.5165, Val: 0.7707, Test: 0.7435
+Epoch: 072, Loss: 0.5163, Val: 0.7961, Test: 0.7435
+Epoch: 073, Loss: 0.5123, Val: 0.8091, Test: 0.7524
+Epoch: 074, Loss: 0.5188, Val: 0.8102, Test: 0.7588
+Epoch: 075, Loss: 0.5017, Val: 0.7956, Test: 0.7588
+Epoch: 076, Loss: 0.5092, Val: 0.7355, Test: 0.7588
+Epoch: 077, Loss: 0.5281, Val: 0.7247, Test: 0.7588
+Epoch: 078, Loss: 0.5218, Val: 0.7799, Test: 0.7588
+Epoch: 079, Loss: 0.5179, Val: 0.7950, Test: 0.7588
+Epoch: 080, Loss: 0.5248, Val: 0.7896, Test: 0.7588
+Epoch: 081, Loss: 0.5319, Val: 0.7896, Test: 0.7588
+Epoch: 082, Loss: 0.5222, Val: 0.7572, Test: 0.7588
+Epoch: 083, Loss: 0.5141, Val: 0.7377, Test: 0.7588
+Epoch: 084, Loss: 0.5254, Val: 0.7831, Test: 0.7588
+Epoch: 085, Loss: 0.5188, Val: 0.8134, Test: 0.7628
+Epoch: 086, Loss: 0.5119, Val: 0.8183, Test: 0.7664
+Epoch: 087, Loss: 0.5213, Val: 0.8080, Test: 0.7664
+Epoch: 088, Loss: 0.4985, Val: 0.7929, Test: 0.7664
+Epoch: 089, Loss: 0.5139, Val: 0.7756, Test: 0.7664
+Epoch: 090, Loss: 0.5162, Val: 0.7831, Test: 0.7664
+Epoch: 091, Loss: 0.5193, Val: 0.7983, Test: 0.7664
+Epoch: 092, Loss: 0.5013, Val: 0.8075, Test: 0.7664
+Epoch: 093, Loss: 0.5177, Val: 0.8102, Test: 0.7664
+Epoch: 094, Loss: 0.5044, Val: 0.8102, Test: 0.7664
+Epoch: 095, Loss: 0.5019, Val: 0.8048, Test: 0.7664
+Epoch: 096, Loss: 0.5112, Val: 0.7864, Test: 0.7664
+Epoch: 097, Loss: 0.5009, Val: 0.7891, Test: 0.7664
+Epoch: 098, Loss: 0.5077, Val: 0.8048, Test: 0.7664
+Epoch: 099, Loss: 0.5074, Val: 0.8096, Test: 0.7664
+Epoch: 100, Loss: 0.5119, Val: 0.8177, Test: 0.7664
+Backend QtAgg is interactive backend. Turning interactive mode on.
+Python 3.8.17 (default, Jul  5 2023, 20:35:33) [MSC v.1916 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 8.12.0 -- An enhanced Interactive Python. Type '?' for help.
+PyDev console: using IPython 8.12.0
+
+
+
+
+Process finished with exit code 0

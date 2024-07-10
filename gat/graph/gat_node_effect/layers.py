@@ -18,12 +18,15 @@ class GraphAttentionLayer(nn.Module):
         self.concat = concat
 
         #W表示该层的特征变化矩阵
-        self.W = nn.Parameter(torch.empty(size=(in_features, out_features)))  # 1433*8  todo:每一个节点的W是相同的？
+        self.W = nn.Parameter(torch.empty(size=(in_features, out_features)))  # 1433*8  todo:每一个节点的W是相同的？ -- 是的
         #一种初始化的方法
         nn.init.xavier_uniform_(self.W.data, gain=1.414)
         #a表示用于计算注意力系数的单层前馈神经网络。
         self.a = nn.Parameter(torch.empty(size=(2*out_features, 1)))
         nn.init.xavier_uniform_(self.a.data, gain=1.414)
+
+        self.b = nn.Parameter(torch.empty(size=(1176, 1176)))
+        nn.init.xavier_uniform_(self.b.data, gain=1.414)
 
         self.leakyrelu = nn.LeakyReLU(self.alpha)
     
@@ -39,8 +42,8 @@ class GraphAttentionLayer(nn.Module):
         # 二者相乘则为(n, n, 1)，需要通过 squeeze操作去掉第3个维度
         # e = self.leakyrelu(torch.matmul(a_input, self.a).squeeze(2))
         
-        e = self._prepare_attentional_mechanism_input(Wh)
-        e = e * node_weight
+        e = self._prepare_attentional_mechanism_input(Wh, node_weight)
+        # e = e * node_weight
 
         # 注意力系数可能为0，这里需要进行筛选操作，便于后续乘法
         zero_vec = -9e15 * torch.ones_like(e)
@@ -59,19 +62,9 @@ class GraphAttentionLayer(nn.Module):
         
         else:
             return h_prime
-
-    # out of memory
-    # def _prepare_attentional_mechanism_input(self, Wh):
-    #     # number of nodes
-    #     N = Wh.size()[0]
-    #     Wh_repeated_in_chunks = Wh.repeat_interleave(N, dim=0)
-    #     Wh_repeated_alternating = Wh.repeat(N, 1)
-    #     all_combinations_matrix = torch.cat([Wh_repeated_in_chunks, Wh_repeated_alternating], dim=1)
-    #     #将维度改为(N, N, 2 * self.out_features)
-    #     return all_combinations_matrix.view(N, N, 2 * self.out_features)
     
     
-    def _prepare_attentional_mechanism_input(self, Wh):
+    def _prepare_attentional_mechanism_input(self, Wh, node_weight):
         # Wh.shape (N, out_feature)
         # self.a.shape (2 * out_feature, 1)
         # Wh1&2.shape (N, 1)
@@ -81,6 +74,10 @@ class GraphAttentionLayer(nn.Module):
         Wh2 = torch.matmul(Wh, self.a[self.out_features:, :])
         # broadcast add
         e = Wh1 + Wh2.T  # 先把Wh2.T(1, 2708) 变为2708行相同的，再分别加Wh1(2708,1)的一个数
+
+        e2 = torch.matmul(node_weight, self.b)
+        e = e+e2
+
         return self.leakyrelu(e)
     
     

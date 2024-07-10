@@ -90,3 +90,9 @@ teest()
 model_save_path = '../saved_model/model.pth'
 torch.save(model.state_dict(), model_save_path)
 print()
+
+# 保存特征
+import pickle
+f = open('../saved_model/node_features.pkl', "wb")
+pickle.dump(features, f)
+f.close()
