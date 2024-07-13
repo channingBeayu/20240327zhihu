@@ -39,5 +39,15 @@ class Net(torch.nn.Module):
     def decode_all(self, z):
         prob_adj = z @ z.t()
         # return (prob_adj > 0).nonzero(as_tuple=False).t()
-        return (prob_adj > 2).nonzero(as_tuple=False).t()
+
+        links = (prob_adj > 1.7).nonzero(as_tuple=False).t()
+        # 删除同一个节点的环
+        duplicate_columns = []
+        for i in range(links.shape[1]):
+            column = links[:, i]
+            if column[0] == column[1]:
+                duplicate_columns.append(i)
+
+        links = links[:, [index for index in range(links.shape[1]) if index not in duplicate_columns]]
+        return links
 

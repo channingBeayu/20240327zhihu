@@ -19,7 +19,7 @@ model.load_state_dict(torch.load('data/model.pth'))
 model.eval()
 
 z = model.encode(data.x, data.train_pos_edge_index, adj, link_weight)  # (1176, 64)
-final_edge_index = model.decode_all(z)  # 249
+final_edge_index = model.decode_all(z)  # >0:百万  >2:249  >1.7:708
 
 # 3、id转换，并加入边集合
 with open(r'F:\Code\240313\gat\graph\dataset\mydata\data_edges.pkl', "rb+") as f:

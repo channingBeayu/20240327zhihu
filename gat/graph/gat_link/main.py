@@ -7,25 +7,13 @@ import torch.optim as optim
 from torch_geometric.utils import negative_sampling
 from sklearn.metrics import accuracy_score
 
+from gat.graph.utils.get_weight import get_link_weight
 from model import GAT
 from gat.graph.gat_node.model import GAT as GAT_node
 from utils import *
 
 import time
 
-
-def get_link_weight(link_label):
-    type = re.findall(r'\[(.*?)\]', link_label)[0]
-    if type == 'but':
-        return 1.0
-    elif type == 'causal':
-        return 10.0
-    elif type == 'condition':
-        return 8.0
-    elif type == 'more':
-        return 4.0
-    elif type == 'seq':
-        return 6.0
 
 
 # device
@@ -44,13 +32,16 @@ fix_seed(seed)
 
 # data
 adj, features, labels, idx_train, idx_val, idx_test = load_data()
+# adj, features, labels, idx_train, idx_val, idx_test = load_data_cora()
 
 # link
 path = '../dataset/mydata/'
 dataset = 'zh'
+# path = '../dataset/cora/'
+# dataset = 'cora'
 idx_features_labels = pd.read_csv("{}{}.content".format(path, dataset), sep='\t', header=None)
 embedding_model = SentenceTransformerBackend("sentence-transformers/all-MiniLM-L6-v2")
-edges_data = pd.read_csv("{}{}.cites".format('../dataset/mydata/', 'zh'), sep='\t', header=None)
+edges_data = pd.read_csv("{}{}.cites".format(path, dataset), sep='\t', header=None)
 idx = idx_features_labels.iloc[:, 0].values
 idx_map = {j: i for i, j in enumerate(idx)}
 # 形成一个(N*N)的矩阵，[i,j]表示这条边的重要程度,N=features.shape[0]
@@ -70,15 +61,15 @@ model = GAT(nfeat=features.size()[1], nhid=hidden,
             nclass=2, dropout=dropout,
             alpha=alpha, nheads=nheads).to(device)
 # # 将gat_node的前半部分的参数复制过来
-model2 = GAT_node(nfeat=features.size()[1], nhid=hidden,
-            nclass=labels.max().item() + 1, dropout=dropout,
-            alpha=alpha, nheads=nheads).to(device)
-model2.load_state_dict(torch.load('../saved_model/model.pth'))
-model2.eval()
-for i in range(nheads):
-    attention_module_name = f'attention_{i}'
-    params_i = getattr(model2, attention_module_name).state_dict()
-    getattr(model2, attention_module_name).load_state_dict(params_i)
+# model2 = GAT_node(nfeat=features.size()[1], nhid=hidden,
+#             nclass=labels.max().item() + 1, dropout=dropout,
+#             alpha=alpha, nheads=nheads).to(device)
+# model2.load_state_dict(torch.load('../saved_model/model.pth'))
+# model2.eval()
+# for i in range(nheads):
+#     attention_module_name = f'attention_{i}'
+#     params_i = getattr(model2, attention_module_name).state_dict()
+#     getattr(model2, attention_module_name).load_state_dict(params_i)
 
 
 # loss and optimizer
@@ -113,10 +104,12 @@ def train(epoch):
 
     y_pred = [1 if prob > 0.5 else 0 for prob in link_logits]
     print(
-        'Epoch [{}/{}], Loss: {:.4f}, Acc: {:.2f}, time: {:.4f}s'.
+        'Epoch [{}/{}], Loss: {:.4f}, Acc: {:.2f}, hamming_loss: {:.4f}, time: {:.4f}s'.
         format(
             epoch + 1, num_epochs, loss.item(),
-            100 * accuracy_score(link_labels, y_pred), time.time() - t)
+            100 * accuracy_score(link_labels, y_pred),
+            sum(link_labels != torch.Tensor(y_pred)) / len(link_labels),
+            time.time() - t)
     )
 
 

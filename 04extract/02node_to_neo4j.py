@@ -166,7 +166,7 @@ class NodeMerge:
                 self.graph.create(relation)
 
 merge = NodeMerge()
-topic_nums = 8
+topic_nums = 2  # 8
 event_embeddings, event_infos, events = merge.get_topic()
 eventss = merge.node_merge(event_embeddings, events)
 merge.to_graph(eventss, event_infos)

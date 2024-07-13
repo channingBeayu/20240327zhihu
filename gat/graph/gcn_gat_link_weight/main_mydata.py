@@ -98,7 +98,13 @@ def train(data, model, optimizer):
     loss.backward()
     optimizer.step()
 
-    return loss
+    threshold = 0.5
+    predicted_labels = torch.Tensor([1 if prob >= threshold else 0 for prob in link_logits])
+    accuracy = sum(p_label == t_label for p_label, t_label in zip(predicted_labels, link_labels)) / len(link_labels)
+
+    hamming_loss = sum(link_labels != predicted_labels) / len(link_labels)
+
+    return loss, accuracy, hamming_loss
 
 @torch.no_grad()
 def teest(data, model):
@@ -121,22 +127,26 @@ def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     model = Net(data.x.shape[1], 64).to(device)
-
-
     optimizer = torch.optim.Adam(params=model.parameters(), lr=0.01)
 
     best_val_auc = test_auc = 0
     for epoch in range(1, 101):
-        loss = train(data, model, optimizer)
+        loss, accuracy, hamming_loss = train(data, model, optimizer)
         val_auc, tmp_test_auc = teest(data, model)
         if val_auc > best_val_auc:
             best_val_auc = val_auc
             test_auc = tmp_test_auc
-        print(f'Epoch: {epoch:03d}, Loss: {loss:.4f}, Val: {val_auc:.4f}, '
-              f'Test: {test_auc:.4f}')
+        print(f'Epoch: {epoch:03d}, Loss: {loss:.4f}, acc: {accuracy:.4f}, hamming_loss: {hamming_loss:.4f},'
+              f' Val: {val_auc:.4f}, Test: {test_auc:.4f}')
+        # Epoch: 100, Loss: 0.5413, acc: 0.8173, hamming_loss: 0.1827, Val: 0.7112, Test: 0.7073
 
     z = model.encode(data.x, data.train_pos_edge_index, adj, link_weight)
     final_edge_index = model.decode_all(z)
+    print()
+
+    # 保存模型
+    model_save_path = './model.pth'
+    torch.save(model.state_dict(), model_save_path)
     print()
 
 

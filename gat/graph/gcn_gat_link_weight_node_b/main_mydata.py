@@ -13,20 +13,8 @@ from gbertopic.bertopic.backend._sentencetransformers import SentenceTransformer
 from gat.graph.gat_node_effect.model import GAT as GAT_node
 
 from gat.graph.gat_link.utils import load_data
+from gat.graph.utils.get_weight import get_link_weight
 from model import Net
-
-def get_link_weight(link_label):
-    type = re.findall(r'\[(.*?)\]', link_label)[0]
-    if type == 'but':
-        return 0.3
-    elif type == 'causal':
-        return 2.0
-    elif type == 'condition':
-        return 1.5
-    elif type == 'more':
-        return 1.0
-    elif type == 'seq':
-        return 2.0
 
 
 data = Data()
