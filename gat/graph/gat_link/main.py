@@ -6,6 +6,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torch_geometric.utils import negative_sampling
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import f1_score
 
 from gat.graph.utils.get_weight import get_link_weight
 from model import GAT
@@ -20,7 +21,7 @@ import time
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 # hyper-parameters
-num_epochs = 1000
+num_epochs = 100  # 1000
 seed = 2022
 dropout = 0.6
 alpha = 0.2
@@ -104,11 +105,12 @@ def train(epoch):
 
     y_pred = [1 if prob > 0.5 else 0 for prob in link_logits]
     print(
-        'Epoch [{}/{}], Loss: {:.4f}, Acc: {:.2f}, hamming_loss: {:.4f}, time: {:.4f}s'.
+        'Epoch [{}/{}], Loss: {:.4f}, Acc: {:.2f}, hamming_loss: {:.4f}, f1: {:.4f}, time: {:.4f}s'.
         format(
             epoch + 1, num_epochs, loss.item(),
-            100 * accuracy_score(link_labels, y_pred),
-            sum(link_labels != torch.Tensor(y_pred)) / len(link_labels),
+            100 * accuracy_score(link_labels, y_pred),  # acc
+            sum(link_labels != torch.Tensor(y_pred)) / len(link_labels),  # hamming_loss
+            f1_score(link_labels, y_pred, average='weighted'),  # f1
             time.time() - t)
     )
 
@@ -116,10 +118,23 @@ def train(epoch):
 def teest():
     with torch.no_grad():
         model.eval()
+
         outputs = model(features, adj)
         test_acc = accuracy(outputs[idx_test], labels[idx_test])
         print('test acc: {:.2f}'.format(test_acc * 100))
-        visualize(outputs, color=labels, model_name=model.name)
+        # visualize(outputs, color=labels, model_name=model.name)
+        print('tSNE image is generated')
+
+
+
+
+def valid():
+    with torch.no_grad():
+        model.eval()
+        outputs = model(features, adj)
+        val_acc = accuracy(outputs[idx_val], labels[idx_val])
+        print('val acc: {:.2f}'.format(val_acc * 100))
+        # visualize(outputs, color=labels, model_name=model.name)
         print('tSNE image is generated')
 
 

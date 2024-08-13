@@ -6,6 +6,7 @@ import numpy as np
 import torch.nn.functional as F
 import torch
 from sklearn.metrics import roc_auc_score
+from sklearn.metrics import f1_score
 from torch_geometric.data import Data
 from torch_geometric.utils import negative_sampling
 from torch_geometric.utils import train_test_split_edges
@@ -99,8 +100,9 @@ def train(data, model, optimizer):
     accuracy = sum(p_label == t_label for p_label, t_label in zip(predicted_labels, link_labels)) / len(link_labels)
 
     hamming_loss = sum(link_labels != predicted_labels) / len(link_labels)
+    f1 = f1_score(link_labels, predicted_labels, average='weighted')
 
-    return loss, accuracy, hamming_loss
+    return loss, accuracy, hamming_loss, f1
 
 @torch.no_grad()
 def teest(data, model):
@@ -129,13 +131,13 @@ def main():
 
     best_val_auc = test_auc = 0
     for epoch in range(1, 101):
-        loss, accuracy, hamming_loss = train(data, model, optimizer)
+        loss, accuracy, hamming_loss, f1 = train(data, model, optimizer)
         val_auc, tmp_test_auc = teest(data, model)
         if val_auc > best_val_auc:
             best_val_auc = val_auc
             test_auc = tmp_test_auc
         print(f'Epoch: {epoch:03d}, Loss: {loss:.4f}, acc: {accuracy:.4f}, hamming_loss: {hamming_loss:.4f},'
-              f' Val: {val_auc:.4f}, Test: {test_auc:.4f}')
+              f'f1: {f1:.4f}, Val: {val_auc:.4f}, Test: {test_auc:.4f}')
         # Epoch: 100, Loss: 0.4836, acc: 0.8488, hamming_loss: 0.1512, Val: 0.8399, Test: 0.7895
 
     z = model.encode(data.x, data.train_pos_edge_index, adj, link_weight)
